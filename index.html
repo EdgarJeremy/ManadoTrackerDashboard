@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dashboard</title>
+	
+    <script type="text/javascript" src='https://maps.google.com/maps/api/js?sensor=true&libraries=places&key=AIzaSyBwTMhjPlZtwMX3mbZz1AjJrDJq-Uh-Wvw'></script>
+    <script type="text/javascript" src="http://dispar.manadokota.go.id/assets/js/gmaps.js"></script>
+	
+	<script type="text/javascript" src="http://localhost:7001/socket.io/socket.io.js"></script>
+
+</head>
+<body>
+
+<div id="map" style="width: 100%;height: 100vh;"></div>
+
+</body>
+
+<script>
+	
+	map = new GMaps({
+            el: "#map",
+            lat: 1.4688361124423284,
+            lng: 124.8543383781738,
+            zoom: 13,
+            mapType: "terrain"
+        });
+	
+	marker = map.addMarker({
+            lat: 1.4688361124423284,
+            lng: 124.8543383781738,
+	});
+	
+	socket = io.connect("http://localhost:7001");
+	
+	console.log(socket);
+	
+	socket.on("gerak",function(data){
+		console.log(data);
+		
+		marker.setPosition(new google.maps.LatLng(data.latitude,data.longitude));
+	})
+	
+</script>
+
+</html>
